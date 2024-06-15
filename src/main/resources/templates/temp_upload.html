@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -134,16 +134,28 @@
             margin: 0 130px 0 160px;
         }
 
+        /*.photo-album-icon {*/
+        /*    width: 30px;*/
+        /*    height: 30px;*/
+        /*    display: flex;*/
+        /*    border: 2px solid white;*/
+        /*    justify-content: center;*/
+        /*    align-items: center;*/
+        /*    cursor: pointer;*/
+        /*    border-radius: 50%*/
+        /*}*/
         .photo-album-icon {
             width: 30px;
             height: 30px;
-            display: flex;
+            display: inline-flex; /* display 속성을 inline-flex로 변경 */
             border: 2px solid white;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            border-radius: 50%
+            border-radius: 50%;
+            pointer-events: auto;
         }
+
 
         .box-bar {
             background-color: white;
@@ -250,9 +262,13 @@
                 <div class="take-photo-icon">
                     <img src="/images/Frame%20427318932.svg" alt="Take photo Icon">
                 </div>
-                <div class="photo-album-icon">
+                <div class="photo-album-icon" id="photo-album-icon">
                     <img src="/images/Frame%20427318934.svg" alt="photo album Icon">
                 </div>
+                <form id="upload-form" th:action="@{/upload}" method="post" enctype="multipart/form-data" style="display:none;">
+                    <input type="file" id="file-input" name="image" accept="image/*" required />
+                    <input type="hidden" id="region-input" name="region" />
+                </form>
             </div>
             <div class="box-bar">
                 <div class="message-icon">
@@ -289,8 +305,24 @@
     document.querySelectorAll('.settings ul li').forEach(function(li) {
         li.addEventListener('click', function() {
             document.querySelector('.settings').firstChild.nodeValue = this.textContent;
-            this.parentElement.style.display = 'none';
+            document.querySelector('.settings ul').style.display = 'none';
         });
+    });
+
+    // 사진 앨범 아이콘 클릭 시 파일 선택 창 열기
+    document.getElementById('photo-album-icon').addEventListener('click', function() {
+        document.getElementById('file-input').click();
+    });
+
+    // 파일 선택 시 자동으로 업로드
+    document.getElementById('file-input').addEventListener('change', function() {
+        const region = document.querySelector('.settings').firstChild.nodeValue.trim();
+        if (region === '행정구') {
+            console.log('아무것도 선택 안함');
+            return;
+        }
+        document.getElementById('region-input').value = region;
+        document.getElementById('upload-form').submit();
     });
 </script>
 </body>

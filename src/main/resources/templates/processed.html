@@ -54,7 +54,7 @@
     </style>
 </head>
 <body>
-<h1> 처리된 이미지에 대한 URL이 생성되었습니다! </h1>
+<h1> ai 분석 결과는 다음과 같습니다.</h1>
 
 <div class="container">
     <div class="image-container">
@@ -64,6 +64,8 @@
     <div class="url-container">
         <p>이미지 URL: <a th:href="${imageUrl}" th:text="${imageUrl}" target="_blank">이미지 링크</a></p>
         <p>지역: <span th:text="${region}"></span></p>
+        <p>인식 결과: <span th:text="${classification}"></span></p>
+        
     </div>
 </div>
 </body>
