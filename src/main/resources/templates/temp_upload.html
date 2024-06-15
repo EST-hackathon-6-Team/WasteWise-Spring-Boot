@@ -65,20 +65,48 @@
         }
 
         .title {
-            font-size: 24px;
+            font-size: 35px;
             font-weight: bold;
-            /*화면 중앙에 위치*/
-            margin-left: 45%;
-            margin-top: 15px;
+            margin-left: 38%;
+            margin-top: 18px;
         }
 
         .settings {
-            font-size: 18px;
+            position: relative;
+            font-size: 30px;
             cursor: pointer;
             border: 1px solid white;
             border-radius: 10px;
-            padding: 4px 8px 4px 24px;
+            padding: 4px 8px;
             margin: 18px 26px 0 0;
+            pointer-events: auto;
+            background-color: transparent;
+            color: white;
+        }
+
+        .settings ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            color: black;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .settings ul li {
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 28px;
+        }
+
+        .settings ul li:hover {
+            background-color: lightgray;
         }
 
         .bottom-bar {
@@ -116,8 +144,6 @@
             cursor: pointer;
             border-radius: 50%
         }
-
-
 
         .box-bar {
             background-color: white;
@@ -169,7 +195,6 @@
             border-right: none;
             border-bottom: none;
             border-top-left-radius: 18px;
-
         }
 
         .corner.top-right {
@@ -206,7 +231,15 @@
     <div class="overlay">
         <div class="top-bar">
             <div class="title">WasteWise</div>
-            <div class="settings">행정구&emsp;▼</div>
+            <div class="settings">
+                행정구
+                <ul>
+                    <li>강동구</li>
+                    <li>강서구</li>
+                    <li>강남구</li>
+                    <li>강북구</li>
+                </ul>
+            </div>
         </div>
         <div class="corner top-left"></div>
         <div class="corner top-right"></div>
@@ -221,7 +254,7 @@
                     <img src="/images/Frame%20427318934.svg" alt="photo album Icon">
                 </div>
             </div>
-            <div class = box-bar>
+            <div class="box-bar">
                 <div class="message-icon">
                     <img src="/images/Frame%20427318233.svg" alt="Recycle Icon">
                 </div>
@@ -246,6 +279,18 @@
             .catch(err => {
                 console.error("Error accessing the camera: ", err);
             });
+    });
+
+    document.querySelector('.settings').addEventListener('click', function() {
+        const ul = this.querySelector('ul');
+        ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.querySelectorAll('.settings ul li').forEach(function(li) {
+        li.addEventListener('click', function() {
+            document.querySelector('.settings').firstChild.nodeValue = this.textContent;
+            this.parentElement.style.display = 'none';
+        });
     });
 </script>
 </body>
