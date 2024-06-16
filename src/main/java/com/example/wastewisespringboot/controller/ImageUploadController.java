@@ -24,6 +24,7 @@ public class ImageUploadController {
     private String processedImageUrl;
     private String processedRegion;
     private String processedClassification;
+    private String processedResult;
 
     @Autowired
     public ImageUploadController(ImageUploadService imageUploadService, RestTemplate restTemplate) {
@@ -57,6 +58,8 @@ public class ImageUploadController {
         processedImageUrl = data.get("imageUrl");
         processedRegion = data.get("region");
         processedClassification = data.get("classification");
+        processedResult = data.get("llm_response");
+
     }
 
     @GetMapping("/processed")
@@ -65,6 +68,8 @@ public class ImageUploadController {
         model.addAttribute("imageUrl", processedImageUrl);
         model.addAttribute("region", processedRegion);
         model.addAttribute("classification", processedClassification);
+        model.addAttribute("llm_response", processedResult);
+
         return "processed"; // 처리된 이미지를 표시할 페이지로 이동
     }
 }
